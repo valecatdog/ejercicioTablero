@@ -3,10 +3,12 @@ package logica;
 public class Tablero {
     int local;
     int visitante;
+    static int contador;
     
     public Tablero(){
         this.local = 0;
         this.visitante = 0;
+        contador++;
     }
     
     public Tablero(int local, int visitante){
@@ -23,6 +25,8 @@ public class Tablero {
         else{
            this.visitante = local;
         }
+        
+        contador++;
         
     }
 
@@ -64,6 +68,7 @@ public class Tablero {
         }
     }
     
+    
     public String quienGano(){
         String resultado;
         if(this.local != this.visitante){
@@ -79,5 +84,9 @@ public class Tablero {
         }
         
         return resultado;
+    }
+   
+    public String getNumero(){
+        return Integer.toString(contador);
     }
 }
