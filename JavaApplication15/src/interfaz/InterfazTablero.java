@@ -7,23 +7,22 @@ public class InterfazTablero extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InterfazTablero.class.getName());
     public ArrayList<Tablero> arrayTableros = new ArrayList<>();
-    /**
-     * Creates new form intento
-     */
+    
     
     public InterfazTablero() {
         initComponents();
-        Tablero tablero1 = new Tablero();
-        arrayTableros.add(tablero1);
+        //cargo tableros en un array porque es la unica manera en la que pude hacer funcionar el combobox
+        for (int i = 0; i < 5; i++){
+        arrayTableros.add(new Tablero());
+        comboTableros.addItem("Tablero "+(i+1));
+        }
+         
     }
     
-    public void cargarTableros(){
-        comboTableros.removeAllItems();
-        for (Tablero t : arrayTableros){
-            comboTableros.addItem(t.getNumero());
-        }
+    public int getTablero(){
+        return comboTableros.getSelectedIndex();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,10 +35,9 @@ public class InterfazTablero extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         comboTableros = new javax.swing.JComboBox<>();
-        btnAniadirTablero = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         lblVisitante = new javax.swing.JLabel();
-        btnResultado = new javax.swing.JButton();
+        btnReiniciar = new javax.swing.JButton();
         lblContVisitante = new javax.swing.JLabel();
         btnSumaVisitante = new javax.swing.JButton();
         btnRestaVisitante = new javax.swing.JButton();
@@ -56,22 +54,10 @@ public class InterfazTablero extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Tablero:");
 
-        comboTableros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboTableros.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                comboTablerosItemStateChanged(evt);
-            }
-        });
+        comboTableros.setToolTipText("");
         comboTableros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboTablerosActionPerformed(evt);
-            }
-        });
-
-        btnAniadirTablero.setText("Nuevo tablero");
-        btnAniadirTablero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAniadirTableroActionPerformed(evt);
             }
         });
 
@@ -80,13 +66,11 @@ public class InterfazTablero extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(44, 44, 44)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(comboTableros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAniadirTablero)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(43, 43, 43))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,9 +78,8 @@ public class InterfazTablero extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboTableros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAniadirTablero))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addComponent(comboTableros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -105,12 +88,12 @@ public class InterfazTablero extends javax.swing.JFrame {
         lblVisitante.setForeground(new java.awt.Color(0, 0, 0));
         lblVisitante.setText("Visitante");
 
-        btnResultado.setBackground(new java.awt.Color(51, 51, 51));
-        btnResultado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnResultado.setText("Reiniciar");
-        btnResultado.addActionListener(new java.awt.event.ActionListener() {
+        btnReiniciar.setBackground(new java.awt.Color(51, 51, 51));
+        btnReiniciar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnReiniciar.setText("Reiniciar");
+        btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResultadoActionPerformed(evt);
+                btnReiniciarActionPerformed(evt);
             }
         });
 
@@ -176,50 +159,49 @@ public class InterfazTablero extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblLocal)
-                        .addGap(32, 32, 32)
+                        .addGap(106, 106, 106)
                         .addComponent(lblVisitante))
+                    .addComponent(btnTerminar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnTerminar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRestaLocal, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                            .addComponent(btnSumaLocal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnSumaVisitante, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                            .addComponent(btnRestaVisitante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(19, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addComponent(lblContLocal)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblContVisitante)
-                .addGap(75, 75, 75))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(lblContLocal)
+                                .addGap(85, 85, 85)
+                                .addComponent(lblContVisitante)
+                                .addGap(20, 20, 20))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnRestaLocal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnSumaLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(51, 51, 51)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnSumaVisitante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRestaVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblLocal)
+                        .addGap(131, 131, 131)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblLocal)
-                    .addComponent(lblVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(lblContLocal))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblContVisitante)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(2, 2, 2)
+                        .addComponent(lblVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblLocal, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblContLocal)
+                    .addComponent(lblContVisitante))
+                .addGap(8, 8, 8)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSumaLocal, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSumaVisitante, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,84 +212,87 @@ public class InterfazTablero extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnTerminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(btnResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addComponent(btnReiniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 300, Short.MAX_VALUE))
+                .addGap(0, 311, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 10, Short.MAX_VALUE)
+                    .addGap(0, 16, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResultadoActionPerformed
-        Tablero tablero = arrayTableros.get(comboTableros.getSelectedIndex());
+    private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
         tablero.reiniciarTablero();
         lblContVisitante.setText(Integer.toString(tablero.getVisitante()));
         lblContLocal.setText(Integer.toString(tablero.getLocal()));
         
-    }//GEN-LAST:event_btnResultadoActionPerformed
+    }//GEN-LAST:event_btnReiniciarActionPerformed
 
     private void btnSumaVisitanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaVisitanteActionPerformed
-        Tablero tablero = arrayTableros.get(comboTableros.getSelectedIndex());
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
         tablero.sumaVisita();
         lblContVisitante.setText(Integer.toString(tablero.getVisitante()));//
     }//GEN-LAST:event_btnSumaVisitanteActionPerformed
 
     private void btnRestaVisitanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaVisitanteActionPerformed
-        Tablero tablero = arrayTableros.get(comboTableros.getSelectedIndex());
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
         tablero.restaVisita();
         lblContVisitante.setText(Integer.toString(tablero.getVisitante()));
     }//GEN-LAST:event_btnRestaVisitanteActionPerformed
 
     private void btnTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTerminarActionPerformed
-        Tablero tablero = arrayTableros.get(comboTableros.getSelectedIndex());
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
         JOptionPane.showMessageDialog(this, tablero.quienGano());
-        this.dispose();
+        tablero.reiniciarTablero();
+        lblContVisitante.setText(Integer.toString(tablero.getVisitante()));
+        lblContLocal.setText(Integer.toString(tablero.getLocal()));
+        
     }//GEN-LAST:event_btnTerminarActionPerformed
 
     private void btnSumaLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaLocalActionPerformed
-        Tablero tablero = arrayTableros.get(comboTableros.getSelectedIndex());
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
         tablero.sumaLocal();
         lblContLocal.setText(Integer.toString(tablero.getLocal()));
     }//GEN-LAST:event_btnSumaLocalActionPerformed
 
     private void btnRestaLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaLocalActionPerformed
-        Tablero tablero = arrayTableros.get(comboTableros.getSelectedIndex());
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
         tablero.restaLocal();
         lblContLocal.setText(Integer.toString(tablero.getLocal()));
     }//GEN-LAST:event_btnRestaLocalActionPerformed
 
     private void comboTablerosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboTablerosActionPerformed
-        
+        int indice = getTablero();
+        Tablero tablero = arrayTableros.get(indice);
+        lblContLocal.setText(Integer.toString(tablero.getLocal()));
+        lblContVisitante.setText(Integer.toString(tablero.getVisitante()));
     }//GEN-LAST:event_comboTablerosActionPerformed
-
-    private void btnAniadirTableroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAniadirTableroActionPerformed
-        Tablero tab = new Tablero();
-        arrayTableros.add(tab);
-        comboTableros.addItem(tab.getNumero());
-        cargarTableros();
-    }//GEN-LAST:event_btnAniadirTableroActionPerformed
-
-    private void comboTablerosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboTablerosItemStateChanged
-        
-    }//GEN-LAST:event_comboTablerosItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -337,10 +322,9 @@ public class InterfazTablero extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAniadirTablero;
+    private javax.swing.JButton btnReiniciar;
     private javax.swing.JButton btnRestaLocal;
     private javax.swing.JButton btnRestaVisitante;
-    private javax.swing.JButton btnResultado;
     private javax.swing.JButton btnSumaLocal;
     private javax.swing.JButton btnSumaVisitante;
     private javax.swing.JButton btnTerminar;
